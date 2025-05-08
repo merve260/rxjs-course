@@ -8,7 +8,7 @@
         <mat-tab label="Beginners">
 
             <courses-card-list
-                    [courses]="beginnerCourses$ | async">
+                    [courses]="beginnerCourses$  | async"><!--“Bu Observable içindeki veriyi takip et, değişince ekrana yazdır.”-->
 
             </courses-card-list>
 

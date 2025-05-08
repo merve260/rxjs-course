@@ -29,6 +29,17 @@ export class AboutComponent implements OnInit {
 
     ngOnInit() {
 
+        const source1$ =of(1, 2, 3);
+
+        const source2$ =of(4, 5, 6);
+
+        const source3$ =of(7, 8, 9);
+
+        const result$ = concat(source1$,source2$,source3$);
+
+        result$.subscribe(console.log);
+
+
     /* const interval$ = timer(3000,1000);
     const sub = interval$.subscribe(val => console.log("stream1 => " + val));
 
@@ -42,41 +53,27 @@ export class AboutComponent implements OnInit {
             
         ); */
         // Özel bir Observable yani gözlemci oluşturuyoruz
-        const http$ = Observable.create( observer => {
-            // sen burada observer.next(), observer.error(), observer.complete() çağırabilirsin
-            fetch('/api/courses') // 1. Sunucuya HTTP isteği gönderiyoruz (asenkron çalışır, Promise döner) Yani Api istegi gönderiliyor.
-            // 2. Gelen cevabı JSON formatına çeviriyoruz (bu da Promise döner)
-            .then(response => {
-                return response.json(); // burası veri hazır olduğunda çalışır
-            })
-            // 3. JSON verisi geldiğinde gözlemcilere (subscribe edenlere) veriyi iletiyoruz
-            .then(body => {
-                observer.next(body);  // veri gönderildi
-                observer.complete();  // akış tamamlandı bilgisi gönderildi
-            } )
-                // 4. Hata olursa: hem hata loglanıyor hem de gözlemcilere iletiliyor
-                .catch(err => {
-                    observer.error(err);
-                });
-
-                // http$.subscribe({
-                //     next: data => console.log('Data:', data),  //  next: Observable veri gönderdiğinde bu fonksiyon çalışır
-                //     // yani observer.next(...) çağrıldığında burası tetiklenir
-                //     error: err => console.error('Fehler:', err), // error: Eğer Observable içinde bir hata oluşursa bu fonksiyon çalışır
-                //     // yani observer.error(...) çağrıldığında tetiklenir yani burasi gözlemcinin degil subjectin görebilecegi bir hata mesajidir.
-                //     complete: () => console.log('complete') // complete: Observable akışı sona erdiğinde (tamamlandığında) bu fonksiyon çalışır
-                //     // yani observer.complete() çağrıldığında tetiklenir
-                //   });
+    //     const http$ = createHttpObservable('/api/courses');
+    //     const courses$ = http$.pipe(
+    //         map(res => Object.entries(res["payload"]) )
+    //     );
 
 
-        });
-        http$.subscribe( //Bu http$ adlı bir Observable’a abone oluyorsun (subscribe).Ve üç tane callback (geri çağırma fonksiyonu) veriyorsun:
-            courses => console.log(courses), //observer.next() çağrıldığında çalışır
-            //Yani sunucudan kurs verisi geldiğinde, bu veri konsola yazılır
-            noop, //nooperation yani hata verirse hicbirsey yapma demek
-            () => console.log('completed')//Observable tamamlandığında (örneğin observer.complete() çağrıldığında) bu çalışır.
-            //Bu, "işlem başarıyla bitti" mesajıdır.
-        );
+    //     // http$.subscribe( //Bu http$ adlı bir Observable’a abone oluyorsun (subscribe).Ve üç tane callback (geri çağırma fonksiyonu) veriyorsun:
+    //     //     courses => console.log(courses), //observer.next() çağrıldığında çalışır
+    //     //     //Yani sunucudan kurs verisi geldiğinde, bu veri konsola yazılır
+    //     //     noop, //nooperation yani hata verirse hicbirsey yapma demek
+    //     //     () => console.log('completed')//Observable tamamlandığında (örneğin observer.complete() çağrıldığında) bu çalışır.
+    //     //     //Bu, "işlem başarıyla bitti" mesajıdır.
+    //     // );
+
+    //     courses$.subscribe( 
+    //     courses => console.log(courses),
+    //     noop,
+    //     () => console.log('completed')
+    //    );
+
 }
 
 }
+

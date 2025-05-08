@@ -40,6 +40,7 @@ export class CourseDialogComponent implements AfterViewInit {
         });
 
     }
+    
 
     ngAfterViewInit() {
 
